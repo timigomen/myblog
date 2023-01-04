@@ -3642,7 +3642,7 @@ h1.page-title + .tag-cloud-list {
   left: 0px;
 }
 .card-widget:not(.card-info) .item-headline:after {
-  content: "akilar";
+  content: "GTC";
   position: absolute;
   bottom: 0;
   font-size: 12px;
@@ -5561,6 +5561,12 @@ h1.page-title + .tag-cloud-list {
 }
 #waline-wrap .wl-comment-actions > button:not(last-child) {
   padding-right: 4px;
+}
+#waline-wrap textarea {
+  background: url("https://bj.bcebos.com/baidu-rmb-video-cover-1/c67cc7af12c37e309410be18ca1b61a3.png") 100% 100% no-repeat;
+}
+#waline-wrap textarea:focus {
+  background-image: none;
 }
 .fireworks {
   position: fixed;
