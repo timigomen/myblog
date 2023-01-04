@@ -2928,13 +2928,6 @@ input[type="range"]::-webkit-slider-thumb {
   border: var(--border-style);
 }
 
-/* 首页侧栏卡片 */
-#aside-content .card-widget {
-  background: var(--trans-light);
-  backdrop-filter: var(--backdrop-filter);
-  border-radius: 18px;
-  border: var(--border-style);
-}
 
 /* 文章页、归档页、普通页面 */
 div#post,
@@ -2953,7 +2946,6 @@ div#archive {
 
 /* 夜间模式遮罩 */
 [data-theme="dark"] #recent-posts > .recent-post-item,
-[data-theme="dark"] #aside-content .card-widget,
 [data-theme="dark"] div#post,
 [data-theme="dark"] div#archive,
 [data-theme="dark"] div#page {
@@ -3148,13 +3140,6 @@ input[name="colors"] {
   border: var(--border-style);
 }
 
-/* 首页侧栏卡片 */
-#aside-content .card-widget {
-  background: var(--trans-light);
-  backdrop-filter: var(--backdrop-filter);
-  border-radius: 18px;
-  border: var(--border-style);
-}
 
 /* 文章页、归档页、普通页面 */
 div#post,
@@ -3169,7 +3154,6 @@ div#archive {
 
 /* 夜间模式遮罩 */
 [data-theme="dark"] #recent-posts > .recent-post-item,
-[data-theme="dark"] #aside-content .card-widget,
 [data-theme="dark"] div#post,
 [data-theme="dark"] div#archive,
 [data-theme="dark"] div#page {

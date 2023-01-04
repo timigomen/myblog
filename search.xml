@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>CSS排除选择器:not()</title>
+      <link href="/posts/338c3283.html"/>
+      <url>/posts/338c3283.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h1><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">li</span><span class="selector-pseudo">:not</span>(<span class="selector-pseudo">:first</span>-child)&#123;</span><br><span class="line">    <span class="attribute">color</span>:<span class="number">#0C58A7</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h1><p>表格中的数字注明了完全支持该属性的首个浏览器版本。<br><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/0c0e2f226955fd010a4f06b59ddae45d.png"></p><h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><code>:not(selector)</code> 选择器匹配非指定元素&#x2F;选择器的每个元素。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> html </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> html </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>butterfly版权美化教程</title>
       <link href="/posts/a0d6dfaf.html"/>
       <url>/posts/a0d6dfaf.html</url>
