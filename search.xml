@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>一个类似（高仿）codepen的网站animpen码笔-动画效果托管平台</title>
+      <link href="/posts/255710b3.html"/>
+      <url>/posts/255710b3.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h1><p>说下这个网站（码码笔 <a href="animpen.com">animpen.com</a></p><p>码笔网：面向前端开发人员和设计人员的社交动画开发平台。<br>你可以开发和部署自己的测试用例，用来实验前端HTML&#x2F;CSS&#x2F;JS最新特性， 以及学习分享案例来提高自己的动手能力，同时也能通过查看别人的效果代码找到更多产品上的灵感。</p><p>这个可以嵌入我的博客，所以以后我会使用这个开分享我的代码！</p><h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><iframe height="400" style="width: 100%;" scrolling="no" title="JS 气泡上升效果" src="https://animpen.com/embed/i95E3y?tab=rlt" frameborder="no"  allowtransparency="true" allowfullscreen="true"></iframe>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网站分享 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> animpen </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>如何一键查看网页上隐藏的密码？原来这么简单</title>
       <link href="/posts/99c0127f.html"/>
       <url>/posts/99c0127f.html</url>
