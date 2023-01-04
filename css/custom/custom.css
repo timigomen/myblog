@@ -1969,10 +1969,6 @@ div#category {
   background: #121212;
 }
 
-[data-theme="dark"] .card-widget {
-  background: #121212 !important;
-}
-
 [data-theme="dark"] div#post {
   background: #121212 !important;
 }

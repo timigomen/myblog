@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>gcore提供免费CDN加速服务，每月1000GB流量+10亿次请求</title>
+      <link href="/posts/e75f3564.html"/>
+      <url>/posts/e75f3564.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/eaea27895d84fd1acb920ad4964f61e8.png"><br>Gcore 是公共云和边缘计算、内容交付、托管和安全解决方案的国际领导者。我们管理一个全球基础设施，旨在为企业级企业提供一流的边缘和基于云的服务。Gcore 总部位于卢森堡，在德国、立陶宛、波兰、格鲁吉亚和塞浦路斯设有办事处。<br>Gcore 提供免费计划套餐：</p><ul><li>每个月1T流量</li><li>每月10亿次请求</li><li>官方有140+节点加速（免费计划每月那么多）</li><li>支持SSL</li><li>支持WebSocket</li><li>提供DDoS防护，基础WAF</li><li>不用绑定信用卡</li></ul><p>如果像购买付费服务，官方提供多种信用卡支付：中国银联，万事达，VISA，美国运通卡~</p><h1 id="账号注册和cdn配置"><a href="#账号注册和cdn配置" class="headerlink" title="账号注册和cdn配置"></a>账号注册和cdn配置</h1><blockquote><p>注册地址：<a href="https://auth.gcore.com/login/signup">https://auth.gcore.com/login/signup</a><br>填写邮箱，密码<br>邮箱接收激活优化（收不到查看垃圾箱）<br><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/201da844edecb30db613a568bb9e80f5.png"></p></blockquote><p>但是，目前貌似邮箱要国际邮箱，所以推荐使用github登录，简单明白！</p><h1 id="选择免费计划（无需填信用卡）"><a href="#选择免费计划（无需填信用卡）" class="headerlink" title="选择免费计划（无需填信用卡）"></a>选择免费计划（无需填信用卡）</h1><p><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/d1029ed2988221fbeae80509e3113af0.png" alt="image.png"><br><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/f92eb7d0d08b9ac7959c852ffd6b4a3a.png" alt="image.png"></p><h1 id="账号配置成功后"><a href="#账号配置成功后" class="headerlink" title="账号配置成功后"></a>账号配置成功后</h1><p>账号配置成功后，可见CDN服务已经激活（Active）<br><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/aad7546fd5306713e10fb7110f12c048.png" alt="image.png"></p><h1 id="配置CDN"><a href="#配置CDN" class="headerlink" title="配置CDN"></a>配置CDN</h1><p>点击 【Create CDN resource】按钮，开始配置CDN。</p><h2 id="官方提供2种配置方式"><a href="#官方提供2种配置方式" class="headerlink" title="官方提供2种配置方式"></a>官方提供2种配置方式</h2><p>① 加速和保护整个站点：使用 CDN 和 DNS 服务对整个站点进行无代码加速和网络层保护。免费计划会自动激活 DNS 服务。<br>② 仅加速和保护静态资产：使用 CDN 服务对您网站的静态资产进行加速和网络层保护。需要更改代码。</p><h2 id="选择第二项，开始配置CDN"><a href="#选择第二项，开始配置CDN" class="headerlink" title="选择第二项，开始配置CDN"></a>选择第二项，开始配置CDN</h2><p><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/a90b31fbb8004f59a6b9f5bdce1c820e.png" alt="image.png"></p><h2 id="填写基础信息"><a href="#填写基础信息" class="headerlink" title="填写基础信息"></a>填写基础信息</h2><p>Origin（源域名），Custom Demain （自定义域名），SSL 加速<br><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/14a1271766cbf4790305d515fdae129d.png" alt="image.png"></p><h2 id="配置域名解析"><a href="#配置域名解析" class="headerlink" title="配置域名解析"></a>配置域名解析</h2><p>自定义域名需要CNAME解析到指定的域名上<br><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/4da212d5f9ba445e1a4dda0c269a1fd3.png" alt="image.png"><br>如图为 DNSPOND 添加解析:<br><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/636e2cbbeb34eb44dc245b39a1ce6c30.png" alt="image.png"></p><h2 id="官方提供了一些集成插件"><a href="#官方提供了一些集成插件" class="headerlink" title="官方提供了一些集成插件"></a>官方提供了一些集成插件</h2><p>我们暂时不需要<br><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/64e424dec410205cdcfe25c36ca29c25.png" alt="image.png"></p><h2 id="优化访问设置"><a href="#优化访问设置" class="headerlink" title="优化访问设置"></a>优化访问设置</h2><p>因为我们主要是图片CDN加速，GZip可以不开启，WebSocket也不需要，WAF防御也不用开启<br><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/34301f67925ec1bab2b92d1cb76b7370.png" alt="image.png"></p><h2 id="提交以后CDN就创建成功了！"><a href="#提交以后CDN就创建成功了！" class="headerlink" title="提交以后CDN就创建成功了！"></a>提交以后CDN就创建成功了！</h2><p><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/0e8536e1cb08fcf11006af0e820b8cc1.png" alt="image.png"></p><h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>域名CNAME解析生效需要等10分钟左右，如果开启SSL需要等待的更久一些（博主SSL生效大概等了20分钟）。</p><h1 id="访问速度"><a href="#访问速度" class="headerlink" title="访问速度"></a>访问速度</h1><p><img src="https://bj.bcebos.com/baidu-rmb-video-cover-1/d445464e0bfe8c7ee9f093ec00cf6ac4.png"></p><h1 id="最后总结"><a href="#最后总结" class="headerlink" title="最后总结"></a>最后总结</h1><p>Gcore 官宣有140+节点，这里有一个官方的IP集合：<a href="https://api.gcorelabs.com/cdn/public-ip-list">https://api.gcorelabs.com/cdn/public-ip-list</a><br>测试了一下亚太几个IP访问速度还不错！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络资源 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> cdn </tag>
+            
+            <tag> gcore </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CSS排除选择器:not()</title>
       <link href="/posts/338c3283.html"/>
       <url>/posts/338c3283.html</url>
@@ -45,7 +72,9 @@
       
         <tags>
             
-            <tag> hexo - butterfly </tag>
+            <tag> hexo </tag>
+            
+            <tag> butterfly </tag>
             
         </tags>
       
@@ -97,7 +126,9 @@
       
         <tags>
             
-            <tag> hexo - butterfly </tag>
+            <tag> hexo </tag>
+            
+            <tag> butterfly </tag>
             
         </tags>
       
