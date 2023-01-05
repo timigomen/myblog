@@ -619,3 +619,67 @@ var newYear = () => {
     });
 }
 newYear();
+
+var percentFlag = false; // 节流阀
+var rootlex_musicPlaying = false;
+var talksurl =  'https://weiboforkktm.eu.org';
+var talkspath = '/talks/';
+function essayScroll() {
+    let a = document.documentElement.scrollTop || window.pageYOffset; // 卷去高度
+    const waterfallResult = a % document.documentElement.clientHeight; // 卷去一个视口
+    result <= 99 || (result = 99);
+
+    if (
+        !percentFlag &&
+        waterfallResult + 100 >= document.documentElement.clientHeight &&
+        document.querySelector("#waterfall")
+    ) {
+        // console.info(waterfallResult, document.documentElement.clientHeight);
+        setTimeout(() => {
+            waterfall("#waterfall");
+        }, 500);
+    } else {
+        setTimeout(() => {
+            document.querySelector("#waterfall") && waterfall("#waterfall");
+        }, 500);
+    }
+
+    const r = window.scrollY + document.documentElement.clientHeight;
+
+    let p = document.getElementById("post-comment") || document.getElementById("footer");
+
+    (p.offsetTop + p.offsetHeight / 2 < r || 90 < result) && (percentFlag = true);
+}
+function replaceAll(e, n, t) {
+    return e.split(n).join(t);
+}
+var rootlex = {
+    getTalks() {
+        fetch(talksurl + '/comment?path=' + talkspath)
+            .then((res) => {
+                return res.json()
+            })
+            .then((json) => {
+                let i = 0, talksdata = '';
+                while (i < json.count){
+                    if (json.data[i].type == 'administrator'){
+                        talksdata += '<li class="bber-item"><div class="bber-content">' + json.data[i].comment + '</div><hr><div class="bber-bottom"><div class="bber-info"><div class="bber-info-time"><i class="far fa-clock"></i><time class="datatime" style="display: inline;">' + dayjs(json.data[i].createdAt).format('YYYY/MM/DD') + '</time></div></div></div></li>'
+                    }
+                    i++;
+                }
+                document.getElementById('waterfall').innerHTML=talksdata;
+                rootlex.reflashEssayWaterFall()
+            })
+            .catch((err => {
+                console.log(err)
+            }))
+    },
+    reflashEssayWaterFall: function () {
+        document.querySelector("#waterfall") &&
+        setTimeout(function () {
+            waterfall("#waterfall");
+            document.getElementById("waterfall").classList.add("show");
+        }, 500);
+    }
+};
+rootlex.reflashEssayWaterFall();
