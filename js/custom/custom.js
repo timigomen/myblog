@@ -7,375 +7,376 @@ $percent && window.addEventListener("scroll", (function () {
     $percent.dataset.percent = ((document.body.scrollTop || document.documentElement.scrollTop) / (e - t) * 100).toFixed(0)
 }));
 
-function postAddToc () {
-  let postContent = document.querySelector('#post>#article-container.post-content')
-  let cardToc = document.getElementById('card-toc')
-  if (postContent && cardToc) {
-    let tocNumber = cardToc.getElementsByClassName('toc-number')
-    let tocLink = cardToc.getElementsByClassName('toc-link')
-    for (let i = 0; i < tocLink.length; i++) {
-      document.getElementById(decodeURIComponent(tocLink[i].attributes.href.value).slice(1)).dataset.toc = tocNumber[i].innerText
+function postAddToc() {
+    let postContent = document.querySelector('#post>#article-container.post-content')
+    let cardToc = document.getElementById('card-toc')
+    if (postContent && cardToc) {
+        let tocNumber = cardToc.getElementsByClassName('toc-number')
+        let tocLink = cardToc.getElementsByClassName('toc-link')
+        for (let i = 0; i < tocLink.length; i++) {
+            document.getElementById(decodeURIComponent(tocLink[i].attributes.href.value).slice(1)).dataset.toc = tocNumber[i].innerText
+        }
     }
-  }
 }
-postAddToc ()
+postAddToc()
 
 document.addEventListener('pjax:complete', tosetting);
 document.addEventListener('DOMContentLoaded', tosetting);
-function tosetting(){
-$("#settingWindow").hide();
-if(localStorage.getItem("blur")=="false"){
-    blur=0;
-    }else{
-        blur=1;
-    
+function tosetting() {
+    $("#settingWindow").hide();
+    if (localStorage.getItem("blur") == "false") {
+        blur = 0;
+    } else {
+        blur = 1;
+
     }
-    if(localStorage.getItem("yjjs")=="true"){
-        yjjs=1;
-    }else{
-        yjjs=0;
-        
+    if (localStorage.getItem("yjjs") == "true") {
+        yjjs = 1;
+    } else {
+        yjjs = 0;
+
     }
-    if(localStorage.getItem("fpson")==undefined){
-        localStorage.setItem("fpson","1");
+    if (localStorage.getItem("fpson") == undefined) {
+        localStorage.setItem("fpson", "1");
     }
-if(!blur){
-    document.getElementById("settingStyle").innerText=`
+    if (!blur) {
+        document.getElementById("settingStyle").innerText = `
     *,*:not(.card-info)::before,*::after{
         -webkit-backdrop-filter: none!important;
         backdrop-filter: none!important;
         -webkit-filter: none!important;
         filter: none!important;
     }`}
-    else{
-        document.getElementById("settingStyle").innerText=''
+    else {
+        document.getElementById("settingStyle").innerText = ''
     }
-setBlur=function(){
-    blur=!blur;
-    localStorage.setItem("blur",blur);
-    if(!blur){
-    document.getElementById("settingStyle").innerText=`
+    setBlur = function () {
+        blur = !blur;
+        localStorage.setItem("blur", blur);
+        if (!blur) {
+            document.getElementById("settingStyle").innerText = `
     *{
         -webkit-backdrop-filter: none!important;
         backdrop-filter: none!important;
         -webkit-filter: none!important;
         filter: none!important;
     }`}
-    else{
-        document.getElementById("settingStyle").innerText=''
+        else {
+            document.getElementById("settingStyle").innerText = ''
+        }
     }
-}
-// if(yjjs){
-//     document.getElementById("yjjs").innerText=`
-//     *:not(#web_bg){
-//         transform:translateZ(0);
-//         backface-visibility: hidden
-//     }`}
-//     else{
-//         document.getElementById("yjjs").innerText=``
-//     }
-yjjs1=function(){
-    yjjs=!yjjs;
-    localStorage.setItem("yjjs",yjjs)
     // if(yjjs){
-    // document.getElementById("yjjs").innerText=`
-    // *:not(#web_bg){
-    //     transform:translateZ(0);
-    //     backface-visibility: hidden
-    // }`}
-    // else{
-    //     document.getElementById("yjjs").innerText=``
-    // }
-}
-if(localStorage.getItem("blogTheme")=="acrylic"){
-    document.getElementById("css").href="";
-}
-switchTheme=function(){
-    if(document.getElementById("css").href==window.location.protocol+"//"+window.location.host+"/css/stylessimple.css"){
-        document.getElementById("css").href=""
-        localStorage.setItem("blogTheme","acrylic");
-    }else{
-        document.getElementById("css").href="/css/stylessimple.css"
-        localStorage.setItem("blogTheme","simple");
+    //     document.getElementById("yjjs").innerText=`
+    //     *:not(#web_bg){
+    //         transform:translateZ(0);
+    //         backface-visibility: hidden
+    //     }`}
+    //     else{
+    //         document.getElementById("yjjs").innerText=``
+    //     }
+    yjjs1 = function () {
+        yjjs = !yjjs;
+        localStorage.setItem("yjjs", yjjs)
+        // if(yjjs){
+        // document.getElementById("yjjs").innerText=`
+        // *:not(#web_bg){
+        //     transform:translateZ(0);
+        //     backface-visibility: hidden
+        // }`}
+        // else{
+        //     document.getElementById("yjjs").innerText=``
+        // }
     }
-}
-setColor=function(c){
-    document.getElementById("themeColor").innerText=`:root{--lyx-theme:var(--lyx-${c})!important}`;
-    localStorage.setItem("themeColor",c);
-
-}
-setFont=function(n){
-    localStorage.setItem("font",n);
-    if(n=="main"){
-        var s=document.querySelectorAll("body,.aplayer")
-        for(var i = 0; i <s.length; i++) {
-            s[i].style.fontFamily="-apple-system, IBM Plex Mono ,monospace,'微软雅黑', sans-serif"
+    if (localStorage.getItem("blogTheme") == "acrylic") {
+        document.getElementById("css").href = "";
+    }
+    switchTheme = function () {
+        if (document.getElementById("css").href == window.location.protocol + "//" + window.location.host + "/css/stylessimple.css") {
+            document.getElementById("css").href = ""
+            localStorage.setItem("blogTheme", "acrylic");
+        } else {
+            document.getElementById("css").href = "/css/stylessimple.css"
+            localStorage.setItem("blogTheme", "simple");
         }
     }
-    else if(n=="HYPailou"){
-        var s=document.querySelectorAll("body,.aplayer")
-        for(var i = 0; i <s.length; i++) {
-            s[i].style.fontFamily="Fredoka,HYPailou,KyoukashoProL,-apple-system, IBM Plex Mono ,monospace,'微软雅黑', sans-serif"
-        }
+    setColor = function (c) {
+        document.getElementById("themeColor").innerText = `:root{--lyx-theme:var(--lyx-${c})!important}`;
+        localStorage.setItem("themeColor", c);
+
     }
-    else{
-        var s=document.querySelectorAll("body,.aplayer")
-        for(var i = 0; i <s.length; i++) {
-            s[i].style.fontFamily="var(--global-font),KyoukashoProL,-apple-system, IBM Plex Mono ,monosapce,\"微软雅黑\", sans-serif"
-        }
-        document.body.style.fontFamily="var(--global-font),KyoukashoProL,-apple-system, IBM Plex Mono ,monosapce,'微软雅黑', sans-serif"
-        document.documentElement.style.setProperty('--global-font', n)
-    }
-}
-if(localStorage.getItem("themeColor")==undefined){
-    localStorage.setItem("themeColor","pink");
-}
-
-setColor(localStorage.getItem("themeColor"));
-
-
-
-if(localStorage.getItem("hideRightside")==undefined){
-    localStorage.setItem("hideRightside","0");
-}
-
-if(localStorage.getItem("hideRightside")=="1"){
-    $("#rightside").toggle()
-}
-toggleRightside=function(){
-    $("#rightside").toggle();
-    localStorage.setItem("hideRightside",Math.abs(Number(localStorage.getItem("hideRightside"))-1))
-}
-if(localStorage.getItem("font")==undefined){
-    localStorage.setItem("font","HYTMR")
-}
-setFont(localStorage.getItem("font"))
-// 存数据
-// name：命名 data：数据
-saveData=function(name, data) {
-    localStorage.setItem(name, JSON.stringify({ 'time': Date.now(), 'data': data }))
-}
-
-// 取数据
-// name：命名 time：过期时长,单位分钟,如传入30,即加载数据时如果超出30分钟返回0,否则返回数据
-loadData=function(name, time) {
-    let d = JSON.parse(localStorage.getItem(name));
-    // 过期或有错误返回 0 否则返回数据
-    if (d) {
-        let t = Date.now() - d.time
-        if (t < (time * 60 * 1000) && t > -1) return d.data;
-    }
-    return 0;
-}
-// 切换背景函数
-// 此处的flag是为了每次读取时都重新存储一次,导致过期时间不稳定
-// 如果flag为0则存储,即设置背景. 为1则不存储,即每次加载自动读取背景.
-changeBg=function(s, flag) {
-    let bg = document.getElementById('web_bg')
-    if (s.charAt(0) == '#') {
-        bg.style.backgroundColor = s
-        bg.style.backgroundImage = 'none'
-    } else bg.style.backgroundImage = s
-    if (!flag) { saveData('blogbg', s) }
-}
-// 上面两个函数如果你有其他需要存取数据的功能，也可以直接使用
-
-// 读取背景
-try {
-    let data = loadData('blogbg', 1440)
-    if (data) changeBg(data, 1)
-    else localStorage.removeItem('blogbg');
-} catch (error) { localStorage.removeItem('blogbg'); }
-
-
-
-fpssw=function(){
-    if(localStorage.getItem("fpson")=="1"){
-        localStorage.setItem("fpson","0");
-    }else{
-        localStorage.setItem("fpson","1");
-    }
-}
-$(".asetting").hide();
-$('#backer').hide();
-$("#"+localStorage.getItem("themeColor")).attr("checked", true);
-if(localStorage.getItem("blur")=="false"){
-    document.getElementById("blur").checked=true;
-}
-if(localStorage.getItem("yjjs")=="true"){
-    document.getElementById("yjjs").checked=true;
-}
-if(localStorage.getItem("fpson")=="1"){
-    document.getElementById("fpson").checked=true;
-}
-
-
-if(localStorage.getItem("sakurahide")=="false"){
-    document.getElementById("hideSakura").checked=true;
-    isSakura=1;
-}
-else if(localStorage.getItem("sakurahide")==null){
-    localStorage.setItem("sakurahide","false");
-    document.getElementById("hideSakura").checked=true;
-    isSakura=1;
-}
-else{
-    setTimeout(
-    stopp,1000);
-    isSakura=0;
-}
-if(localStorage.getItem("aplayerhide")=="false"){
-    document.getElementById("hideAplayer").checked=true;
-}
-else if(localStorage.getItem("aplayerhide")==null){
-    localStorage.setItem("aplayerhide","false");
-    document.getElementById("hideAplayer").checked=true;
-}
-else{
-    doStuff=function() {
-        flag=0;
-        try{
-            ap=aplayers[0];
-            ap.list;
-            flag=1;
-        }catch{
-            setTimeout(doStuff, 50);
-            return;
-        }
-        if(flag){
-            $(".aplayer-fixed").hide()
-        }
-    }
-    doStuff();
-    
-}
-
-document.getElementsByClassName("reSettings")[0].onclick=function(){
-    localStorage.clear()
-    window.location.reload()
-}
-
-toggleWinbox=function(){
-    $("#settingWindow").fadeToggle();
-    if(document.getElementById("settingWindow").style.display!="none"){
-        document.getElementById("settingWindow").style.display="flex";
-    }
-}
-fullScreen=function() {
-    if (document.fullscreenElement) document.exitFullscreen()
-    else document.documentElement.requestFullscreen();
-}
-toggleAside=function(){
-    const $htmlDom = document.documentElement.classList
-      $htmlDom.contains('hide-aside')
-        ? saveToLocal.set('aside-status', 'show', 2)
-        : saveToLocal.set('aside-status', 'hide', 2)
-      $htmlDom.toggle('hide-aside')
-}
-toggleAplayer=function(){
-    $(".aplayer-fixed").toggle()
-    if(localStorage.getItem("aplayerhide")=="true"){
-        localStorage.setItem("aplayerhide",false);
-    }
-    else{
-        localStorage.setItem("aplayerhide",true);
-    }
-}
-// position = $(window).scrollTop();
-// $(window).scroll(function () {
-
-//     scroll = $(window).scrollTop();
-  
-//     if (scroll > position) {
-//       document.getElementsByTagName("header")[0].style.transform="translateY(58px)";
-//     } else {
-  
-  
-//         document.getElementsByTagName("header")[0].style.transform="";
-  
-//     }
-  
-//     position = scroll;
-//   });
-toggleSakuras=function(){
-    isSakura=!isSakura;
-    stopp(isSakura);
-    if(localStorage.getItem("sakurahide")=="true"){
-        localStorage.setItem("sakurahide",false);
-    }
-    else{
-        localStorage.setItem("sakurahide",true);
-    }
-}
-switchAside=function(){
-    if(left){
-        document.getElementById("aside-content").classList.add("right");
-        document.querySelector(".layout > div:first-child").classList.add("left");
-        localStorage.setItem("leftAside","false");
-    }
-    else{
-        document.getElementById("aside-content").className="aside-content";
-        document.querySelector(".layout > div:first-child").className="";
-        try{
-        document.querySelector("#recent-posts").className="recent-posts";
-    }catch(err){}localStorage.setItem("leftAside","true");}
-    left=!left;
-}
-left=1;
-if(localStorage.getItem("leftAside")=="true"||localStorage.getItem("leftAside")==null){
-    
-}else{
-    switchAside();
-}
-if(localStorage.getItem("autoTheme")=="true"){
-    localStorage.setItem("autoTheme","false");
-    document.getElementById("autoTheme").checked=true;
-    var time=new Date();
-    if(time.getHours()<=7||time.getHours()>=19){
-        activateDarkMode()
-        saveToLocal.set('theme', 'dark', 2)
-        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
-    }
-    else{
-        activateLightMode()
-        saveToLocal.set('theme', 'light', 2)
-        GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
-    }
-}
-if(location.href.indexOf('posts')!=-1){
-    var xhr = new XMLHttpRequest();
-    var url = document.querySelector('#page-header').style.backgroundImage.split('url("')[1].split('")')[0];
-    xhr.open("GET","https://apis.yisous.xyz/api/imageColor?imgurl="+url, true);
-    xhr.send();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState===4) {
-            if(xhr.status===200) {
-                document.getElementById("themeColor").innerText=`:root{--lyx-theme:${xhr.responseText}!important}`;
+    setFont = function (n) {
+        localStorage.setItem("font", n);
+        if (n == "main") {
+            var s = document.querySelectorAll("body,.aplayer")
+            for (var i = 0; i < s.length; i++) {
+                s[i].style.fontFamily = "-apple-system, IBM Plex Mono ,monospace,'微软雅黑', sans-serif"
             }
         }
+        else if (n == "HYPailou") {
+            var s = document.querySelectorAll("body,.aplayer")
+            for (var i = 0; i < s.length; i++) {
+                s[i].style.fontFamily = "Fredoka,HYPailou,KyoukashoProL,-apple-system, IBM Plex Mono ,monospace,'微软雅黑', sans-serif"
+            }
+        }
+        else {
+            var s = document.querySelectorAll("body,.aplayer")
+            for (var i = 0; i < s.length; i++) {
+                s[i].style.fontFamily = "var(--global-font),KyoukashoProL,-apple-system, IBM Plex Mono ,monosapce,\"微软雅黑\", sans-serif"
+            }
+            document.body.style.fontFamily = "var(--global-font),KyoukashoProL,-apple-system, IBM Plex Mono ,monosapce,'微软雅黑', sans-serif"
+            document.documentElement.style.setProperty('--global-font', n)
+        }
     }
-}
-toggleAutoTheme=()=>{
-    if(localStorage.getItem("autoTheme")=="true"){
-        localStorage.setItem("autoTheme","false");
-        $("#con-mode").show();
+    if (localStorage.getItem("themeColor") == undefined) {
+        localStorage.setItem("themeColor", "pink");
     }
-    else{
-        localStorage.setItem("autoTheme","true");
-        var time=new Date();
-        if(time.getHours()<=7||time.getHours()>=19){
+
+    setColor(localStorage.getItem("themeColor"));
+
+
+
+    if (localStorage.getItem("hideRightside") == undefined) {
+        localStorage.setItem("hideRightside", "0");
+    }
+
+    if (localStorage.getItem("hideRightside") == "1") {
+        $("#rightside").toggle()
+    }
+    toggleRightside = function () {
+        $("#rightside").toggle();
+        localStorage.setItem("hideRightside", Math.abs(Number(localStorage.getItem("hideRightside")) - 1))
+    }
+    if (localStorage.getItem("font") == undefined) {
+        localStorage.setItem("font", "HYTMR")
+    }
+    setFont(localStorage.getItem("font"))
+    // 存数据
+    // name：命名 data：数据
+    saveData = function (name, data) {
+        localStorage.setItem(name, JSON.stringify({ 'time': Date.now(), 'data': data }))
+    }
+
+    // 取数据
+    // name：命名 time：过期时长,单位分钟,如传入30,即加载数据时如果超出30分钟返回0,否则返回数据
+    loadData = function (name, time) {
+        let d = JSON.parse(localStorage.getItem(name));
+        // 过期或有错误返回 0 否则返回数据
+        if (d) {
+            let t = Date.now() - d.time
+            if (t < (time * 60 * 1000) && t > -1) return d.data;
+        }
+        return 0;
+    }
+    // 切换背景函数
+    // 此处的flag是为了每次读取时都重新存储一次,导致过期时间不稳定
+    // 如果flag为0则存储,即设置背景. 为1则不存储,即每次加载自动读取背景.
+    changeBg = function (s, flag) {
+        let bg = document.getElementById('web_bg')
+        if (s.charAt(0) == '#') {
+            bg.style.backgroundColor = s
+            bg.style.backgroundImage = 'none'
+        } else bg.style.backgroundImage = s
+        if (!flag) { saveData('blogbg', s) }
+    }
+    // 上面两个函数如果你有其他需要存取数据的功能，也可以直接使用
+
+    // 读取背景
+    try {
+        let data = loadData('blogbg', 1440)
+        if (data) changeBg(data, 1)
+        else localStorage.removeItem('blogbg');
+    } catch (error) { localStorage.removeItem('blogbg'); }
+
+
+
+    fpssw = function () {
+        if (localStorage.getItem("fpson") == "1") {
+            localStorage.setItem("fpson", "0");
+        } else {
+            localStorage.setItem("fpson", "1");
+        }
+    }
+    $(".asetting").hide();
+    $('#backer').hide();
+    $("#" + localStorage.getItem("themeColor")).attr("checked", true);
+    if (localStorage.getItem("blur") == "false") {
+        document.getElementById("blur").checked = true;
+    }
+    if (localStorage.getItem("yjjs") == "true") {
+        document.getElementById("yjjs").checked = true;
+    }
+    if (localStorage.getItem("fpson") == "1") {
+        document.getElementById("fpson").checked = true;
+    }
+
+
+    if (localStorage.getItem("sakurahide") == "false") {
+        document.getElementById("hideSakura").checked = true;
+        isSakura = 1;
+    }
+    else if (localStorage.getItem("sakurahide") == null) {
+        localStorage.setItem("sakurahide", "false");
+        document.getElementById("hideSakura").checked = true;
+        isSakura = 1;
+    }
+    else {
+        setTimeout(
+            stopp, 1000);
+        isSakura = 0;
+    }
+    if (localStorage.getItem("aplayerhide") == "false") {
+        document.getElementById("hideAplayer").checked = true;
+    }
+    else if (localStorage.getItem("aplayerhide") == null) {
+        localStorage.setItem("aplayerhide", "false");
+        document.getElementById("hideAplayer").checked = true;
+    }
+    else {
+        doStuff = function () {
+            flag = 0;
+            try {
+                ap = aplayers[0];
+                ap.list;
+                flag = 1;
+            } catch {
+                setTimeout(doStuff, 50);
+                return;
+            }
+            if (flag) {
+                $(".aplayer-fixed").hide()
+            }
+        }
+        doStuff();
+
+    }
+
+    document.getElementsByClassName("reSettings")[0].onclick = function () {
+        localStorage.clear()
+        window.location.reload()
+    }
+
+    toggleWinbox = function () {
+        $("#settingWindow").fadeToggle();
+        if (document.getElementById("settingWindow").style.display != "none") {
+            document.getElementById("settingWindow").style.display = "flex";
+        }
+    }
+    fullScreen = function () {
+        if (document.fullscreenElement) document.exitFullscreen()
+        else document.documentElement.requestFullscreen();
+    }
+    toggleAside = function () {
+        const $htmlDom = document.documentElement.classList
+        $htmlDom.contains('hide-aside')
+            ? saveToLocal.set('aside-status', 'show', 2)
+            : saveToLocal.set('aside-status', 'hide', 2)
+        $htmlDom.toggle('hide-aside')
+    }
+    toggleAplayer = function () {
+        $(".aplayer-fixed").toggle()
+        if (localStorage.getItem("aplayerhide") == "true") {
+            localStorage.setItem("aplayerhide", false);
+        }
+        else {
+            localStorage.setItem("aplayerhide", true);
+        }
+    }
+    // position = $(window).scrollTop();
+    // $(window).scroll(function () {
+
+    //     scroll = $(window).scrollTop();
+
+    //     if (scroll > position) {
+    //       document.getElementsByTagName("header")[0].style.transform="translateY(58px)";
+    //     } else {
+
+
+    //         document.getElementsByTagName("header")[0].style.transform="";
+
+    //     }
+
+    //     position = scroll;
+    //   });
+    toggleSakuras = function () {
+        isSakura = !isSakura;
+        stopp(isSakura);
+        if (localStorage.getItem("sakurahide") == "true") {
+            localStorage.setItem("sakurahide", false);
+        }
+        else {
+            localStorage.setItem("sakurahide", true);
+        }
+    }
+    switchAside = function () {
+        if (left) {
+            document.getElementById("aside-content").classList.add("right");
+            document.querySelector(".layout > div:first-child").classList.add("left");
+            localStorage.setItem("leftAside", "false");
+        }
+        else {
+            document.getElementById("aside-content").className = "aside-content";
+            document.querySelector(".layout > div:first-child").className = "";
+            try {
+                document.querySelector("#recent-posts").className = "recent-posts";
+            } catch (err) { } localStorage.setItem("leftAside", "true");
+        }
+        left = !left;
+    }
+    left = 1;
+    if (localStorage.getItem("leftAside") == "true" || localStorage.getItem("leftAside") == null) {
+
+    } else {
+        switchAside();
+    }
+    if (localStorage.getItem("autoTheme") == "true") {
+        localStorage.setItem("autoTheme", "false");
+        document.getElementById("autoTheme").checked = true;
+        var time = new Date();
+        if (time.getHours() <= 7 || time.getHours() >= 19) {
             activateDarkMode()
             saveToLocal.set('theme', 'dark', 2)
             GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
         }
-        else{
+        else {
             activateLightMode()
             saveToLocal.set('theme', 'light', 2)
             GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
         }
-        $("#con-mode").hide();
     }
-}
+    if (location.href.indexOf('posts') != -1) {
+        var xhr = new XMLHttpRequest();
+        var url = document.querySelector('#page-header').style.backgroundImage.split('url("')[1].split('")')[0];
+        xhr.open("GET", "https://apis.yisous.xyz/api/imageColor?imgurl=" + url, true);
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    document.getElementById("themeColor").innerText = `:root{--lyx-theme:${xhr.responseText}!important}`;
+                }
+            }
+        }
+    }
+    toggleAutoTheme = () => {
+        if (localStorage.getItem("autoTheme") == "true") {
+            localStorage.setItem("autoTheme", "false");
+            $("#con-mode").show();
+        }
+        else {
+            localStorage.setItem("autoTheme", "true");
+            var time = new Date();
+            if (time.getHours() <= 7 || time.getHours() >= 19) {
+                activateDarkMode()
+                saveToLocal.set('theme', 'dark', 2)
+                GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
+            }
+            else {
+                activateLightMode()
+                saveToLocal.set('theme', 'light', 2)
+                GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
+            }
+            $("#con-mode").hide();
+        }
+    }
 }
 switchDarkMode = function () {
     const nowMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
@@ -407,7 +408,7 @@ function Sakura(x, y, s, r, fn) {
     this.fn = fn;
 }
 
-Sakura.prototype.draw = function(cxt) {
+Sakura.prototype.draw = function (cxt) {
     cxt.save();
     var xc = 40 * this.s / 4;
     cxt.translate(this.x, this.y);
@@ -417,7 +418,7 @@ Sakura.prototype.draw = function(cxt) {
     cxt.restore();
 }
 
-Sakura.prototype.update = function() {
+Sakura.prototype.update = function () {
     this.x = this.fn.x(this.x, this.y);
     this.y = this.fn.y(this.y, this.y);
     this.r = this.fn.r(this.r);
@@ -437,67 +438,67 @@ Sakura.prototype.update = function() {
     }
 }
 
-SakuraList = function() {
+SakuraList = function () {
     this.list = [];
 }
-SakuraList.prototype.push = function(sakura) {
+SakuraList.prototype.push = function (sakura) {
     this.list.push(sakura);
 }
-SakuraList.prototype.update = function() {
+SakuraList.prototype.update = function () {
     for (var i = 0, len = this.list.length; i < len; i++) {
         this.list[i].update();
     }
 }
-SakuraList.prototype.draw = function(cxt) {
+SakuraList.prototype.draw = function (cxt) {
     for (var i = 0, len = this.list.length; i < len; i++) {
         this.list[i].draw(cxt);
     }
 }
-SakuraList.prototype.get = function(i) {
+SakuraList.prototype.get = function (i) {
     return this.list[i];
 }
-SakuraList.prototype.size = function() {
+SakuraList.prototype.size = function () {
     return this.list.length;
 }
 
 function getRandom(option) {
     var ret, random;
     switch (option) {
-    case 'x':
-        ret = Math.random() * window.innerWidth;
-        break;
-    case 'y':
-        ret = Math.random() * window.innerHeight;
-        break;
-    case 's':
-        ret = Math.random();
-        break;
-    case 'r':
-        ret = Math.random() * 6;
-        break;
-    case 'fnx':
-        random = -0.5 + Math.random() * 1;
-        ret = function(x, y) {
-            return x + 0.5 * random - 0.6;
-            //x轴速度
-        }
-        ;
-        break;
-    case 'fny':
-        random = 0.8 + Math.random() * 0.7
-        //y轴速度
-        ret = function(x, y) {
-            return y + random;
-        }
-        ;
-        break;
-    case 'fnr':
-        random = Math.random() * 0.03;
-        ret = function(r) {
-            return r + random;
-        }
-        ;
-        break;
+        case 'x':
+            ret = Math.random() * window.innerWidth;
+            break;
+        case 'y':
+            ret = Math.random() * window.innerHeight;
+            break;
+        case 's':
+            ret = Math.random();
+            break;
+        case 'r':
+            ret = Math.random() * 6;
+            break;
+        case 'fnx':
+            random = -0.5 + Math.random() * 1;
+            ret = function (x, y) {
+                return x + 0.5 * random - 0.6;
+                //x轴速度
+            }
+                ;
+            break;
+        case 'fny':
+            random = 0.8 + Math.random() * 0.7
+            //y轴速度
+            ret = function (x, y) {
+                return y + random;
+            }
+                ;
+            break;
+        case 'fnr':
+            random = Math.random() * 0.03;
+            ret = function (r) {
+                return r + random;
+            }
+                ;
+            break;
     }
     return ret;
 }
@@ -524,7 +525,7 @@ function startSakura() {
         randomFnx = getRandom('fnx');
         randomFny = getRandom('fny');
         randomFnR = getRandom('fnr');
-        sakura = new Sakura(randomX,randomY,randomS,randomR,{
+        sakura = new Sakura(randomX, randomY, randomS, randomR, {
             x: randomFnx,
             y: randomFny,
             r: randomFnR
@@ -532,7 +533,7 @@ function startSakura() {
         sakura.draw(cxt);
         sakuraList.push(sakura);
     }
-    stop = requestAnimationFrame(function() {
+    stop = requestAnimationFrame(function () {
         cxt.clearRect(0, 0, canvas.width, canvas.height);
         sakuraList.update();
         sakuraList.draw(cxt);
@@ -540,7 +541,7 @@ function startSakura() {
     })
 }
 
-window.onresize = function() {
+window.onresize = function () {
     var canvasSnow = document.getElementById('canvas_snow');
     canvasSnow.width = window.innerWidth;
     canvasSnow.height = window.innerHeight;
@@ -556,7 +557,7 @@ function stopp(e) {
     }
 }
 window.addEventListener("DOMContentLoaded",
-startSakura);
+    startSakura);
 
 let newYearTimer = null;
 var newYear = () => {
@@ -607,7 +608,7 @@ var newYear = () => {
     }
 
     // 元宝飘落
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
         $('#newYear').wpSuperSnow({
             flakes: ['https://bj.bcebos.com/baidu-rmb-video-cover-1/fc94a73b319f633fb8c15ec357eb55ec.png', 'https://bj.bcebos.com/baidu-rmb-video-cover-1/50e3bd1bc605cf6c0968f88b273b0f62.png', 'https://bj.bcebos.com/baidu-rmb-video-cover-1/b1b2ef4fddf9d1d46ce59619f4ccd4ea.png'],
             totalFlakes: '100',
@@ -622,7 +623,7 @@ newYear();
 
 var percentFlag = false; // 节流阀
 var rootlex_musicPlaying = false;
-var talksurl =  'https://weiboforkktm.eu.org';
+var talksurl = 'https://weiboforkktm.eu.org';
 var talkspath = '/talks/';
 function essayScroll() {
     let a = document.documentElement.scrollTop || window.pageYOffset; // 卷去高度
@@ -661,13 +662,13 @@ var rootlex = {
             })
             .then((json) => {
                 let i = 0, talksdata = '';
-                while (i < json.count){
-                    if (json.data[i].type == 'administrator'){
+                while (i < json.count) {
+                    if (json.data[i].type == 'administrator') {
                         talksdata += '<li class="bber-item"><div class="bber-content">' + json.data[i].comment + '</div><hr><div class="bber-bottom"><div class="bber-info"><div class="bber-info-time"><i class="far fa-clock"></i><time class="datatime" style="display: inline;">' + dayjs(json.data[i].createdAt).format('YYYY/MM/DD') + '</time></div></div></div></li>'
                     }
                     i++;
                 }
-                document.getElementById('waterfall').innerHTML=talksdata;
+                document.getElementById('waterfall').innerHTML = talksdata;
                 rootlex.reflashEssayWaterFall()
             })
             .catch((err => {
@@ -676,10 +677,87 @@ var rootlex = {
     },
     reflashEssayWaterFall: function () {
         document.querySelector("#waterfall") &&
-        setTimeout(function () {
-            waterfall("#waterfall");
-            document.getElementById("waterfall").classList.add("show");
-        }, 500);
+            setTimeout(function () {
+                waterfall("#waterfall");
+                document.getElementById("waterfall").classList.add("show");
+            }, 500);
     }
 };
 rootlex.reflashEssayWaterFall();
+
+function catalogActive() {
+    let $list = document.getElementById('catalog-list')
+    if ($list) {
+        // 鼠标滚轮滚动
+        $list.addEventListener('mousewheel', function (e) {
+            // 计算鼠标滚轮滚动的距离
+            $list.scrollLeft -= e.wheelDelta / 2
+            // 阻止浏览器默认方法
+            e.preventDefault()
+        }, false)
+
+        // 高亮当前页面对应的分类或标签
+        let $catalog = document.getElementById(decodeURIComponent(window.location.pathname))
+        $catalog.classList.add('selected')
+
+        // 滚动当前页面对应的分类或标签到中部
+        $list.scrollLeft = ($catalog.offsetLeft - $list.offsetLeft) - ($list.offsetWidth - $catalog.offsetWidth) / 2
+    }
+}
+catalogActive()
+
+// 检测按键
+window.onkeydown = function (e) {
+    if (e.keyCode === 123) {
+        btf.snackbarShow('开发者模式已打开，请遵循GPL协议', false, 3000)
+    }
+}
+
+function switchPostChart() {
+    // 这里为了统一颜色选取的是“明暗模式”下的两种字体颜色，也可以自己定义
+    let color = document.documentElement.getAttribute('data-theme') === 'light' ? '#4C4948' : 'rgba(255,255,255,0.7)'
+    if (document.getElementById('posts-chart') && postsOption) {
+        try {
+            let postsOptionNew = postsOption
+            postsOptionNew.title.textStyle.color = color
+            postsOptionNew.xAxis.nameTextStyle.color = color
+            postsOptionNew.yAxis.nameTextStyle.color = color
+            postsOptionNew.xAxis.axisLabel.color = color
+            postsOptionNew.yAxis.axisLabel.color = color
+            postsOptionNew.xAxis.axisLine.lineStyle.color = color
+            postsOptionNew.yAxis.axisLine.lineStyle.color = color
+            postsOptionNew.series[0].markLine.data[0].label.color = color
+            postsChart.setOption(postsOptionNew)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    if (document.getElementById('tags-chart') && tagsOption) {
+        try {
+            let tagsOptionNew = tagsOption
+            tagsOptionNew.title.textStyle.color = color
+            tagsOptionNew.xAxis.nameTextStyle.color = color
+            tagsOptionNew.yAxis.nameTextStyle.color = color
+            tagsOptionNew.xAxis.axisLabel.color = color
+            tagsOptionNew.yAxis.axisLabel.color = color
+            tagsOptionNew.xAxis.axisLine.lineStyle.color = color
+            tagsOptionNew.yAxis.axisLine.lineStyle.color = color
+            tagsOptionNew.series[0].markLine.data[0].label.color = color
+            tagsChart.setOption(tagsOptionNew)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    if (document.getElementById('categories-chart') && categoriesOption) {
+        try {
+            let categoriesOptionNew = categoriesOption
+            categoriesOptionNew.title.textStyle.color = color
+            categoriesOptionNew.legend.textStyle.color = color
+            if (!categoryParentFlag) { categoriesOptionNew.series[0].label.color = color }
+            categoriesChart.setOption(categoriesOptionNew)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+document.getElementById("mode-button").addEventListener("click", function () { setTimeout(switchPostChart, 100) })
