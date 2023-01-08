@@ -621,10 +621,13 @@ var newYear = () => {
 }
 newYear();
 
+// 检测按键
+window.onkeydown = function (e) {
+    if (e.keyCode === 123) {
+        btf.snackbarShow('开发者模式已打开，请遵循GPL协议', false, 3000)
+    }
+}
 var percentFlag = false; // 节流阀
-var rootlex_musicPlaying = false;
-var talksurl = 'https://weiboforkktm.eu.org';
-var talkspath = '/talks/';
 function essayScroll() {
     let a = document.documentElement.scrollTop || window.pageYOffset; // 卷去高度
     const waterfallResult = a % document.documentElement.clientHeight; // 卷去一个视口
@@ -654,26 +657,46 @@ function essayScroll() {
 function replaceAll(e, n, t) {
     return e.split(n).join(t);
 }
-var rootlex = {
-    getTalks() {
-        fetch(talksurl + '/comment?path=' + talkspath)
-            .then((res) => {
-                return res.json()
-            })
-            .then((json) => {
-                let i = 0, talksdata = '';
-                while (i < json.count) {
-                    if (json.data[i].type == 'administrator') {
-                        talksdata += '<li class="bber-item"><div class="bber-content">' + json.data[i].comment + '</div><hr><div class="bber-bottom"><div class="bber-info"><div class="bber-info-time"><i class="far fa-clock"></i><time class="datatime" style="display: inline;">' + dayjs(json.data[i].createdAt).format('YYYY/MM/DD') + '</time></div></div></div></li>'
-                    }
-                    i++;
-                }
-                document.getElementById('waterfall').innerHTML = talksdata;
-                rootlex.reflashEssayWaterFall()
-            })
-            .catch((err => {
-                console.log(err)
-            }))
+var anzhiyu = {
+    diffDate: function (d, more = false) {
+        const dateNow = new Date();
+        const datePost = new Date(d);
+        const dateDiff = dateNow.getTime() - datePost.getTime();
+        const minute = 1000 * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
+        const month = day * 30;
+
+        let result;
+        if (more) {
+            const monthCount = dateDiff / month;
+            const dayCount = dateDiff / day;
+            const hourCount = dateDiff / hour;
+            const minuteCount = dateDiff / minute;
+
+            if (monthCount >= 1) {
+                result = datePost.toLocaleDateString().replace(/\//g, "-");
+            } else if (dayCount >= 1) {
+                result = parseInt(dayCount) + " " + GLOBAL_CONFIG.date_suffix.day;
+            } else if (hourCount >= 1) {
+                result = parseInt(hourCount) + " " + GLOBAL_CONFIG.date_suffix.hour;
+            } else if (minuteCount >= 1) {
+                result = parseInt(minuteCount) + " " + GLOBAL_CONFIG.date_suffix.min;
+            } else {
+                result = GLOBAL_CONFIG.date_suffix.just;
+            }
+        } else {
+            result = parseInt(dateDiff / day);
+        }
+        return result;
+    },
+    changeTimeInEssay: function () {
+        document.querySelector("#bber") &&
+            document.querySelectorAll("#bber time").forEach(function (e) {
+                var t = e,
+                    datetime = t.getAttribute("datetime");
+                (t.innerText = anzhiyu.diffDate(datetime, true)), (t.style.display = "inline");
+            });
     },
     reflashEssayWaterFall: function () {
         document.querySelector("#waterfall") &&
@@ -681,83 +704,177 @@ var rootlex = {
                 waterfall("#waterfall");
                 document.getElementById("waterfall").classList.add("show");
             }, 500);
-    }
+    },
+    commentText: function (e) {
+        if (e == "undefined" || e == "null") e = "好棒！";
+        var n = document.getElementsByClassName("el-textarea__inner")[0],
+            t = document.createEvent("HTMLEvents");
+        if (!n) return;
+        t.initEvent("input", !0, !0);
+        var o = replaceAll(e, "\n", "\n> ");
+        (n.value = "> " + o + "\n\n"), n.dispatchEvent(t);
+        var i = document.querySelector("#post-comment").offsetTop;
+        window.scrollTo(0, i - 80),
+            n.focus(),
+            n.setSelectionRange(-1, -1),
+            document.getElementById("comment-tips") && document.getElementById("comment-tips").classList.add("show");
+    },
 };
-rootlex.reflashEssayWaterFall();
 
-function catalogActive() {
-    let $list = document.getElementById('catalog-list')
-    if ($list) {
-        // 鼠标滚轮滚动
-        $list.addEventListener('mousewheel', function (e) {
-            // 计算鼠标滚轮滚动的距离
-            $list.scrollLeft -= e.wheelDelta / 2
-            // 阻止浏览器默认方法
-            e.preventDefault()
-        }, false)
+anzhiyu.changeTimeInEssay();
+anzhiyu.reflashEssayWaterFall();
 
-        // 高亮当前页面对应的分类或标签
-        let $catalog = document.getElementById(decodeURIComponent(window.location.pathname))
-        $catalog.classList.add('selected')
+var percentFlag = false; // 节流阀
+function essayScroll() {
+    let a = document.documentElement.scrollTop || window.pageYOffset; // 卷去高度
+    const waterfallResult = a % document.documentElement.clientHeight; // 卷去一个视口
+    result <= 99 || (result = 99);
 
-        // 滚动当前页面对应的分类或标签到中部
-        $list.scrollLeft = ($catalog.offsetLeft - $list.offsetLeft) - ($list.offsetWidth - $catalog.offsetWidth) / 2
+    if (
+        !percentFlag &&
+        waterfallResult + 100 >= document.documentElement.clientHeight &&
+        document.querySelector("#waterfall")
+    ) {
+        // console.info(waterfallResult, document.documentElement.clientHeight);
+        setTimeout(() => {
+            waterfall("#waterfall");
+        }, 500);
+    } else {
+        setTimeout(() => {
+            document.querySelector("#waterfall") && waterfall("#waterfall");
+        }, 500);
     }
+
+    const r = window.scrollY + document.documentElement.clientHeight;
+
+    let p = document.getElementById("post-comment") || document.getElementById("footer");
+
+    (p.offsetTop + p.offsetHeight / 2 < r || 90 < result) && (percentFlag = true);
 }
-catalogActive()
-
-// 检测按键
-window.onkeydown = function (e) {
-    if (e.keyCode === 123) {
-        btf.snackbarShow('开发者模式已打开，请遵循GPL协议', false, 3000)
-    }
+function replaceAll(e, n, t) {
+    return e.split(n).join(t);
 }
+var anzhiyu = {
+    diffDate: function (d, more = false) {
+        const dateNow = new Date();
+        const datePost = new Date(d);
+        const dateDiff = dateNow.getTime() - datePost.getTime();
+        const minute = 1000 * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
+        const month = day * 30;
 
-function switchPostChart() {
-    // 这里为了统一颜色选取的是“明暗模式”下的两种字体颜色，也可以自己定义
-    let color = document.documentElement.getAttribute('data-theme') === 'light' ? '#4C4948' : 'rgba(255,255,255,0.7)'
-    if (document.getElementById('posts-chart') && postsOption) {
-        try {
-            let postsOptionNew = postsOption
-            postsOptionNew.title.textStyle.color = color
-            postsOptionNew.xAxis.nameTextStyle.color = color
-            postsOptionNew.yAxis.nameTextStyle.color = color
-            postsOptionNew.xAxis.axisLabel.color = color
-            postsOptionNew.yAxis.axisLabel.color = color
-            postsOptionNew.xAxis.axisLine.lineStyle.color = color
-            postsOptionNew.yAxis.axisLine.lineStyle.color = color
-            postsOptionNew.series[0].markLine.data[0].label.color = color
-            postsChart.setOption(postsOptionNew)
-        } catch (error) {
-            console.log(error)
+        let result;
+        if (more) {
+            const monthCount = dateDiff / month;
+            const dayCount = dateDiff / day;
+            const hourCount = dateDiff / hour;
+            const minuteCount = dateDiff / minute;
+
+            if (monthCount >= 1) {
+                result = datePost.toLocaleDateString().replace(/\//g, "-");
+            } else if (dayCount >= 1) {
+                result = parseInt(dayCount) + " " + GLOBAL_CONFIG.date_suffix.day;
+            } else if (hourCount >= 1) {
+                result = parseInt(hourCount) + " " + GLOBAL_CONFIG.date_suffix.hour;
+            } else if (minuteCount >= 1) {
+                result = parseInt(minuteCount) + " " + GLOBAL_CONFIG.date_suffix.min;
+            } else {
+                result = GLOBAL_CONFIG.date_suffix.just;
+            }
+        } else {
+            result = parseInt(dateDiff / day);
         }
-    }
-    if (document.getElementById('tags-chart') && tagsOption) {
-        try {
-            let tagsOptionNew = tagsOption
-            tagsOptionNew.title.textStyle.color = color
-            tagsOptionNew.xAxis.nameTextStyle.color = color
-            tagsOptionNew.yAxis.nameTextStyle.color = color
-            tagsOptionNew.xAxis.axisLabel.color = color
-            tagsOptionNew.yAxis.axisLabel.color = color
-            tagsOptionNew.xAxis.axisLine.lineStyle.color = color
-            tagsOptionNew.yAxis.axisLine.lineStyle.color = color
-            tagsOptionNew.series[0].markLine.data[0].label.color = color
-            tagsChart.setOption(tagsOptionNew)
-        } catch (error) {
-            console.log(error)
+        return result;
+    },
+    changeTimeInEssay: function () {
+        document.querySelector("#bber") &&
+            document.querySelectorAll("#bber time").forEach(function (e) {
+                var t = e,
+                    datetime = t.getAttribute("datetime");
+                (t.innerText = anzhiyu.diffDate(datetime, true)), (t.style.display = "inline");
+            });
+    },
+    reflashEssayWaterFall: function () {
+        document.querySelector("#waterfall") &&
+            setTimeout(function () {
+                waterfall("#waterfall");
+                document.getElementById("waterfall").classList.add("show");
+            }, 500);
+    },
+    commentText: function (txt) {
+        const postCommentDom = document.querySelector("#post-comment");
+        var domTop = postCommentDom.offsetTop;
+        window.scrollTo(0, domTop - 80);
+        if (txt == "undefined" || txt == "null") txt = "好棒！";
+        function setText() {
+            setTimeout(() => {
+                var input = document.getElementsByClassName("el-textarea__inner")[0];
+                if (!input) setText();
+                let evt = document.createEvent("HTMLEvents");
+                evt.initEvent("input", true, true);
+                let inputValue = replaceAll(txt, "\n", "\n> ");
+                input.value = "> " + inputValue + "\n\n";
+                input.dispatchEvent(evt);
+                input.focus();
+                input.setSelectionRange(-1, -1);
+                if (document.getElementById("comment-tips")) {
+                    document.getElementById("comment-tips").classList.add("show");
+                }
+            }, 100);
         }
-    }
-    if (document.getElementById('categories-chart') && categoriesOption) {
-        try {
-            let categoriesOptionNew = categoriesOption
-            categoriesOptionNew.title.textStyle.color = color
-            categoriesOptionNew.legend.textStyle.color = color
-            if (!categoryParentFlag) { categoriesOptionNew.series[0].label.color = color }
-            categoriesChart.setOption(categoriesOptionNew)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+        setText();
+    },
+    initIndexEssay: function () {
+        setTimeout(() => {
+            let essay_bar_swiper = new Swiper(".essay_bar_swiper_container", {
+                passiveListeners: true,
+                direction: "vertical",
+                loop: true,
+                autoplay: {
+                    disableOnInteraction: true,
+                    delay: 3000,
+                },
+                mousewheel: true,
+            });
+
+            let essay_bar_comtainer = document.getElementById("bbtalk");
+            if (essay_bar_comtainer !== null) {
+                essay_bar_comtainer.onmouseenter = function () {
+                    essay_bar_swiper.autoplay.stop();
+                };
+                essay_bar_comtainer.onmouseleave = function () {
+                    essay_bar_swiper.autoplay.start();
+                };
+            }
+        }, 100);
+    },
+};
+
+anzhiyu.initIndexEssay();
+anzhiyu.changeTimeInEssay();
+anzhiyu.reflashEssayWaterFall();
+
+//友链随机传送
+function travelling() {
+    var fetchUrl = "https://moments.zhheo.com/randomfriend"
+    fetch(fetchUrl)
+        .then(res => res.json())
+        .then(json => {
+            var name = json.name;
+            var link = json.link;
+            var msg = "点击前往按钮进入随机一个友链，不保证跳转网站的安全性和可用性。本次随机到的是本站友链：「" + name + "」";
+            document.styleSheets[0].addRule(':root', '--heo-snackbar-time:' + 8000 + 'ms!important');
+            Snackbar.show({
+                text: msg,
+                duration: 8000,
+                pos: 'top-center',
+                actionText: '前往',
+                onActionClick: function (element) {
+                    //Set opacity of element to 0 to close Snackbar
+                    $(element).css('opacity', 0);
+                    window.open(link, '_blank');
+                }
+            });
+        })
 }
-document.getElementById("mode-button").addEventListener("click", function () { setTimeout(switchPostChart, 100) })
