@@ -343,19 +343,6 @@ function tosetting() {
             GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
         }
     }
-    if (location.href.indexOf('posts') != -1) {
-        var xhr = new XMLHttpRequest();
-        var url = document.querySelector('#page-header').style.backgroundImage.split('url("')[1].split('")')[0];
-        xhr.open("GET", "https://apis.yisous.xyz/api/imageColor?imgurl=" + url, true);
-        xhr.send();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    document.getElementById("themeColor").innerText = `:root{--lyx-theme:${xhr.responseText}!important}`;
-                }
-            }
-        }
-    }
     toggleAutoTheme = () => {
         if (localStorage.getItem("autoTheme") == "true") {
             localStorage.setItem("autoTheme", "false");
@@ -559,67 +546,7 @@ function stopp(e) {
 window.addEventListener("DOMContentLoaded",
     startSakura);
 
-let newYearTimer = null;
-var newYear = () => {
-    clearTimeout(newYearTimer);
-    if (!document.querySelector('#newYear')) return;
-    // 新年时间戳 and 星期对象
-    let newYear = new Date('2023-01-22 00:00:00').getTime() / 1000,
-        week = { 0: '周日', 1: '周一', 2: '周二', 3: '周三', 4: '周四', 5: '周五', 6: '周六' }
 
-    time();
-
-    // 补零函数
-    function nol(h) { return h > 9 ? h : '0' + h; };
-
-    function time() {
-        // 现在 时间对象
-        let now = new Date();
-
-        // 右下角 今天
-        document.querySelector('#newYear .today').innerHTML = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + ' ' + week[now.getDay()]
-
-        // 现在与新年相差秒数
-        let second = newYear - Math.round(now.getTime() / 1000);
-
-        // 小于0则表示已经过年
-        if (second < 0) {
-            document.querySelector('#newYear .title').innerHTML = 'Happy New Year!';
-            document.querySelector('#newYear .newYear-time').innerHTML = '<span class="happyNewYear">新年快乐</span>';
-        } else {
-            // 大于0则还未过年
-            document.querySelector('#newYear .title').innerHTML = '距离2023年春节：'
-
-            // 大于一天则直接渲染天数
-            if (second > 86400) {
-                document.querySelector('#newYear .newYear-time').innerHTML = `<span class="day">${Math.ceil(second / 86400)}<span class="unit">天</span></span>`
-            } else {
-                // 小于一天则使用时分秒计时。
-                let h = nol(parseInt(second / 3600));
-                second %= 3600;
-                let m = nol(parseInt(second / 60));
-                second %= 60;
-                let s = nol(second);
-                document.querySelector('#newYear .newYear-time').innerHTML = `<span class="time">${h}:${m}:${s}</span></span>`;
-                // 计时
-                newYearTimer = setTimeout(time, 1000);
-            }
-        }
-    }
-
-    // 元宝飘落
-    jQuery(document).ready(function ($) {
-        $('#newYear').wpSuperSnow({
-            flakes: ['https://bj.bcebos.com/baidu-rmb-video-cover-1/fc94a73b319f633fb8c15ec357eb55ec.png', 'https://bj.bcebos.com/baidu-rmb-video-cover-1/50e3bd1bc605cf6c0968f88b273b0f62.png', 'https://bj.bcebos.com/baidu-rmb-video-cover-1/b1b2ef4fddf9d1d46ce59619f4ccd4ea.png'],
-            totalFlakes: '100',
-            zIndex: '999999',
-            maxSize: '30',
-            maxDuration: '20',
-            useFlakeTrans: false
-        });
-    });
-}
-newYear();
 
 // 检测按键
 window.onkeydown = function (e) {
@@ -878,3 +805,173 @@ function travelling() {
             });
         })
 }
+//监听ctrl+C
+$(document).unbind('keydown').bind('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && (e.keyCode == 67) && (selectTextNow != '')) {
+        btf.snackbarShow('复制成功，复制和转载请标注本文地址');
+        rm.rightmenuCopyText(selectTextNow);
+        return false;
+    }
+})
+
+let newYearTimer = null;
+var newYear = () => {
+    clearTimeout(newYearTimer);
+    if (!document.querySelector('#newYear')) return;
+    // 新年时间戳 and 星期对象
+    let newYear = new Date('2023-01-22 00:00:00').getTime() / 1000,
+        week = { 0: '周日', 1: '周一', 2: '周二', 3: '周三', 4: '周四', 5: '周五', 6: '周六' }
+
+    time();
+
+    // 补零函数
+    function nol(h) { return h > 9 ? h : '0' + h; };
+
+    function time() {
+        // 现在 时间对象
+        let now = new Date();
+
+        // 右下角 今天
+        document.querySelector('#newYear .today').innerHTML = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + ' ' + week[now.getDay()]
+
+        // 现在与新年相差秒数
+        let second = newYear - Math.round(now.getTime() / 1000);
+
+        // 小于0则表示已经过年
+        if (second < 0) {
+            document.querySelector('#newYear .title').innerHTML = 'Happy New Year!';
+            document.querySelector('#newYear .newYear-time').innerHTML = '<span class="happyNewYear">新年快乐</span>';
+        } else {
+            // 大于0则还未过年
+            document.querySelector('#newYear .title').innerHTML = '距离2023年春节：'
+
+            // 大于一天则直接渲染天数
+            if (second > 86400) {
+                document.querySelector('#newYear .newYear-time').innerHTML = `<span class="day">${Math.ceil(second / 86400)}<span class="unit">天</span></span>`
+            } else {
+                // 小于一天则使用时分秒计时。
+                let h = nol(parseInt(second / 3600));
+                second %= 3600;
+                let m = nol(parseInt(second / 60));
+                second %= 60;
+                let s = nol(second);
+                document.querySelector('#newYear .newYear-time').innerHTML = `<span class="time">${h}:${m}:${s}</span></span>`;
+                // 计时
+                newYearTimer = setTimeout(time, 1000);
+            }
+        }
+    }
+}
+newYear();
+
+// 如果当前页有评论就执行函数
+if (document.getElementById('post-comment')) owoBig();
+// 表情放大
+function owoBig() {
+    let flag = 1, // 设置节流阀
+        owo_time = '', // 设置计时器
+        m = 3; // 设置放大倍数
+    // 创建盒子
+    let div = document.createElement('div'),
+        body = document.querySelector('body');
+    // 设置ID
+    div.id = 'owo-big';
+    // 插入盒子
+    body.appendChild(div)
+
+    // 构造observer
+    let observer = new MutationObserver(mutations => {
+
+        for (let i = 0; i < mutations.length; i++) {
+            let dom = mutations[i].addedNodes,
+                owo_body = '';
+            if (dom.length == 2 && dom[1].className == 'OwO-body') owo_body = dom[1];
+            // 如果需要在评论内容中启用此功能请解除下面的注释
+            // else if (dom.length == 1 && dom[0].className == 'tk-comment') owo_body = dom[0];
+            else continue;
+            
+            // 禁用右键（手机端长按会出现右键菜单，为了体验给禁用掉）
+            if (document.body.clientWidth <= 768) owo_body.addEventListener('contextmenu', e => e.preventDefault());
+            // 鼠标移入
+            owo_body.onmouseover = (e) => {
+                    if (flag && e.target.tagName == 'IMG') {
+                        flag = 0;
+                        // 移入300毫秒后显示盒子
+                        owo_time = setTimeout(() => {
+                            let height = e.path[0].clientHeight * m, // 盒子高
+                                width = e.path[0].clientWidth * m, // 盒子宽
+                                left = (e.x - e.offsetX) - (width - e.path[0].clientWidth) / 2, // 盒子与屏幕左边距离
+                                top = e.y - e.offsetY; // 盒子与屏幕顶部距离
+
+                            if ((left + width) > body.clientWidth) left -= ((left + width) - body.clientWidth + 10); // 右边缘检测，防止超出屏幕
+                            if (left < 0) left = 10; // 左边缘检测，防止超出屏幕
+                            // 设置盒子样式
+                            div.style.cssText = `display:flex; height:${height}px; width:${width}px; left:${left}px; top:${top}px;`;
+                            // 在盒子中插入图片
+                            div.innerHTML = `<img src="${e.target.src}">`
+                        }, 300);
+                    }
+                };
+            // 鼠标移出隐藏盒子
+            owo_body.onmouseout = () => { div.style.display = 'none', flag = 1, clearTimeout(owo_time); }
+        }
+
+    })
+    observer.observe(document.getElementById('post-comment'), { subtree: true, childList: true }) // 监听的 元素 和 配置项
+}
+function doStuff() {
+    var flag=0;
+    try{
+        ap=aplayers[0]; //aplayer对象的存放位置挺离谱的
+        ap.list;
+        flag=1;
+    }catch{
+        setTimeout(doStuff, 50);//等待aplayer对象被创建（没找到初始化实例的地方只能这样了，这个判断代码是StackOverflow上面扒的（因为自己是个蒟蒻
+        return;
+    }
+    if(flag){
+        ap.lrc.hide();//自带播放暂停时显隐歌词，可以删
+        document.getElementsByClassName("aplayer-icon-menu")[0].click()
+        if(localStorage.getItem("musicIndex")!=null){
+            musicIndex = localStorage.getItem("musicIndex");
+            ap.list.switch(musicIndex);
+            //歌曲可以本地储存下次访问体验更好
+        }
+        if(sessionStorage.getItem("musicTime") != null){
+            window.musict = sessionStorage.getItem("musicTime");
+            ap.setMode(sessionStorage.getItem("musicMode"));
+            if(sessionStorage.getItem("musicPaused")!='1'){
+                ap.play();
+            }
+            // setTimeout(function(){
+            //     ap.seek(window.musict); //seek炸了我很久，最后决定加个延时（本来要用canplay但是莫名鬼畜了）
+            // },500);
+            var g=true; //加个变量以防鬼畜但是不知道怎么节流qwq
+            ap.on("canplay",function(){
+                if(g){
+                    ap.seek(window.musict);
+                    g=false;//如果不加oncanplay的话会seek失败就这原因炸很久
+                }
+            });
+        }else{
+            sessionStorage.setItem("musicPaused",1);
+            ap.setMode("mini"); //新版添加了保存展开状态功能
+        }
+        if(sessionStorage.getItem("musicVolume") != null){
+            ap.audio.volume=Number(sessionStorage.getItem("musicVolume"));
+        }
+        ap.on("pause",function(){sessionStorage.setItem("musicPaused",1);ap.lrc.hide()});//原基础上加了个检测暂停免得切换页面后爆零(bushi)（指社死）
+        ap.on("play",function(){sessionStorage.setItem("musicPaused",0);ap.lrc.show()});//自带播放暂停时显隐歌词，后面那句可以删，上同
+        ap.audio.onvolumechange=function(){sessionStorage.setItem("musicVolume",ap.audio.volume);};//新版增加保存音量免得切换页面爆零（doge
+        setInterval(function(){
+            musicIndex = ap.list.index;
+            musicTime = ap.audio.currentTime;
+            localStorage.setItem("musicIndex",musicIndex);
+            //保存播放进度
+            sessionStorage.setItem("musicTime",musicTime);
+            sessionStorage.setItem("musicMode",ap.mode);
+            //保存展开状态
+        },200);//节流，200ms精度感知不大qwq
+    }
+}
+doStuff();
