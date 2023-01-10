@@ -268,6 +268,23 @@ rmf.fullScreen = function () {
     else document.documentElement.requestFullscreen();
 }
 
+// 音乐
+const metingJs = document.querySelector("#nav-music meting-js");
+//判断是否是音乐
+if (metingJs.contains(event.target)) {
+} else {
+    function musicBindEvent() {
+        document.querySelector("#nav-music .aplayer-music").addEventListener("click",
+        function() {
+            anzhiyu.musicTelescopic()
+        }),
+        document.querySelector("#nav-music .aplayer-button").addEventListener("click",
+        function() {
+            anzhiyu.musicToggle(!1)
+        })
+    }
+}
+
 // 右键开关
 if (localStorage.getItem("mouse") == undefined) {
     localStorage.setItem("mouse", "on");
